@@ -10,6 +10,8 @@ public class MultiplayerScript : MonoBehaviour
     public Canvas menuCrearPartida;
     public Canvas menuSala;
 
+    public List<JugadorMulti> listadoJugadores;
+
     private string nombreSala;
     private int numeroJugadores;
     private int modoJuego; // 0-5
