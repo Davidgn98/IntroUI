@@ -4,11 +4,20 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor.PackageManager;
+using UnityEditor.SearchService;
 
 public class MultiplayerScript : MonoBehaviour
 {
     public Canvas menuCrearPartida;
     public Canvas menuSala;
+
+    private string nickJugador;
+    public Button botonMulti;
+
+    public TMP_InputField TextNick;
+    public GameObject menuMulti;
+    public GameObject menuNick;
+    public GameObject menuMain;
 
     public List<JugadorMulti> listadoJugadores;
 
@@ -28,7 +37,8 @@ public class MultiplayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(var item in menuCrearPartida.GetComponentsInChildren<TMP_InputField>())
+        botonMulti.onClick.AddListener(ComprobarNombre);
+        foreach (var item in menuCrearPartida.GetComponentsInChildren<TMP_InputField>())
         {
             if(item.name == "NombrePartida")
             {
@@ -136,5 +146,24 @@ public class MultiplayerScript : MonoBehaviour
 
         menuCrearPartida.gameObject.SetActive(false);
         menuSala.gameObject.SetActive(true);
+    }
+
+    public void ComprobarNombre()
+    {
+        if (nickJugador == null)
+        {
+            menuMain.SetActive(false);
+            menuNick.SetActive(true);
+        }
+        else
+        {
+            menuMain.SetActive(false);
+            menuMulti.SetActive(true);  
+        }
+    }
+
+    public void SetNick()
+    {
+        nickJugador = TextNick.text;
     }
 }
