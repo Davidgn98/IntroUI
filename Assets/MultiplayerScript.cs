@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEditor.PackageManager;
 using UnityEditor.SearchService;
+using Unity.VisualScripting;
 
 public class MultiplayerScript : MonoBehaviour
 {
@@ -34,10 +35,12 @@ public class MultiplayerScript : MonoBehaviour
     private Slider numJugadores;
     private Toggle isPrivate;
 
+    private JugadorMulti jugador;
+
     // Start is called before the first frame update
     void Start()
     {
-        botonMulti.onClick.AddListener(ComprobarNombre);
+        jugador = new JugadorMulti(1, "", "blue");
         foreach (var item in menuCrearPartida.GetComponentsInChildren<TMP_InputField>())
         {
             if(item.name == "NombrePartida")
@@ -105,6 +108,10 @@ public class MultiplayerScript : MonoBehaviour
             {
                 item.text = nombreSala;
             }
+            if (item.name == "Jugador1")
+            {
+                item.text = jugador.Nombre;
+            }
             if (item.name == "ModoJuego")
             {
                 if (modJuego == 0)
@@ -143,14 +150,22 @@ public class MultiplayerScript : MonoBehaviour
             }
 
         }
-
+        foreach (var item in menuSala.GetComponentsInChildren<RawImage>())
+        {
+            if (item.name == "Color")
+            {
+                //item.color = jugador.Color.;
+                //TODO
+            }
+        }
+        //listadoJugadores.Add(jugador);
         menuCrearPartida.gameObject.SetActive(false);
         menuSala.gameObject.SetActive(true);
     }
 
     public void ComprobarNombre()
     {
-        if (nickJugador == null)
+        if (jugador.Nombre == "")
         {
             menuMain.SetActive(false);
             menuNick.SetActive(true);
@@ -164,6 +179,9 @@ public class MultiplayerScript : MonoBehaviour
 
     public void SetNick()
     {
-        nickJugador = TextNick.text;
+        if (TextNick.text.Trim().Length != 0)
+        {
+            jugador.Nombre = TextNick.text;
+        }
     }
 }
