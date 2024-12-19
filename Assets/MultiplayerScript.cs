@@ -36,11 +36,12 @@ public class MultiplayerScript : MonoBehaviour
     private Toggle isPrivate;
 
     private JugadorMulti jugador;
+    private string[] arrColor = { "#FF0000", "#00FF00", "#0000FF" };
 
     // Start is called before the first frame update
     void Start()
     {
-        jugador = new JugadorMulti(1, "", "blue");
+        jugador = new JugadorMulti(1, "", "");
         foreach (var item in menuCrearPartida.GetComponentsInChildren<TMP_InputField>())
         {
             if(item.name == "NombrePartida")
@@ -154,8 +155,11 @@ public class MultiplayerScript : MonoBehaviour
         {
             if (item.name == "Color")
             {
-                //item.color = jugador.Color.;
-                //TODO
+                Color newCol;
+                if (UnityEngine.ColorUtility.TryParseHtmlString(jugador.Color, out newCol))
+                {
+                    item.color = newCol;
+                }
             }
         }
         //listadoJugadores.Add(jugador);
@@ -183,5 +187,10 @@ public class MultiplayerScript : MonoBehaviour
         {
             jugador.Nombre = TextNick.text;
         }
+    }
+
+    private void assignColor()
+    {
+        //TODO
     }
 }
